@@ -414,6 +414,9 @@ var/list/gamemode_cache = list()
 				if ("server")
 					config.server = value
 
+				if("hub")
+					world.visibility = 1
+
 				if ("banappeals")
 					config.banappeals = value
 
