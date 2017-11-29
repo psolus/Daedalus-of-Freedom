@@ -48,13 +48,6 @@
 				/datum/mil_rank/ec/e4,
 				/datum/mil_rank/ec/o1
 			)
-		),
-		/datum/species/skrell = list(
-			/datum/mil_branch/expeditionary_corps = list(
-				/datum/mil_rank/ec/e2,
-				/datum/mil_rank/ec/e4,
-				/datum/mil_rank/ec/o1
-			)
 		)
 	)
 
