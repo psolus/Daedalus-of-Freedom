@@ -292,7 +292,7 @@
 	name = "Overeye Long"
 	icon_state = "hair_longovereye"
 
-/datum/sprite_accessory/hair/fag
+/datum/sprite_accessory/hair/flow
 	name = "Flow Hair"
 	icon_state = "hair_f"
 
@@ -626,6 +626,18 @@
 /datum/sprite_accessory/hair/rightsidecut
 	name = "Right Sidecut"
 	icon_state = "hair_rightside"
+
+/datum/sprite_accessory/hair/slick
+	name = "Slick"
+	icon_state = "hair_slick"
+
+/datum/sprite_accessory/hair/messyhair
+	name = "Messy"
+	icon_state = "hair_messyhair"
+
+/datum/sprite_accessory/hair/averagejoe
+	name = "Average Joe"
+	icon_state = "hair_averagejoe"
 
 /*
 ///////////////////////////////////

@@ -206,7 +206,7 @@
 			            access_maint_tunnels, access_external_airlocks, access_emergency_storage,
 			            access_teleporter, access_eva, access_heads,
 			            access_hos, access_RC_announce, access_keycard_auth, access_sec_doors,
-			            access_solgov_crew, access_gun)
+			            access_solgov_crew, access_gun, access_emergency_armory)
 	minimal_access = list()
 
 	software_on_spawn = list(/datum/computer_file/program/comm,
@@ -658,7 +658,7 @@
 		/datum/mil_rank/fleet/o1
 	)
 
-	access = list(access_medical, access_morgue, access_maint_tunnels, access_emergency_storage,
+	access = list(access_medical, access_morgue, access_virology, access_maint_tunnels, access_emergency_storage,
 			            access_crematorium, access_chemistry, access_surgery,
 			            access_medical_equip, access_solgov_crew, access_senmed)
 
@@ -851,7 +851,6 @@
 	total_positions = 2
 	spawn_positions = 2
 	supervisors = "the Executive Officer"
-	minimal_player_age = 3
 	ideal_character_age = 20
 	alt_titles = list(
 		"Janitor")
@@ -935,8 +934,8 @@
 	selection_color = "#515151"
 	ideal_character_age = 20
 	alt_titles = list(
-		"Junior Engineer",
-		"Junior Corpsman",
+		"Engineer Trainee",
+		"Corpsman Trainee",
 		)
 	outfit_type = /decl/hierarchy/outfit/job/torch/crew/service/crewman
 	allowed_branches = list(
@@ -999,7 +998,7 @@
 
 	access = list(access_research, access_mining_office,
 						access_mining_station, access_nanotrasen, access_expedition_shuttle, access_expedition_shuttle_helm, access_guppy,
-						access_hangar, access_petrov, access_petrov_helm, access_guppy_helm)
+						access_hangar, access_petrov, access_petrov_helm, access_guppy_helm, access_mining)
 /datum/job/scientist
 	title = "Scientist"
 	total_positions = 6
@@ -1129,8 +1128,8 @@
 	department = "Civilian"
 	department_flag = CIV
 
-	total_positions = 1
-	spawn_positions = 1
+	total_positions = 2
+	spawn_positions = 2
 	availablity_chance = 30
 	supervisors = "the invisible hand of the market"
 	selection_color = "#515151"
