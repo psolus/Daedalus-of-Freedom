@@ -1,14 +1,3 @@
-<!--
-	If a specific field doesn't apply, remove it!
-	Anything inside tags like these is a comment and will not be displayed in the final issue.
-	Be careful not to write inside them!
-	Joke or spammed issues can and will result in punishment.
-	
-	PUT YOUR ANSWERS ON THE BLANK LINES BELOW THE HEADERS 
-	(The lines with four #'s) 
-	Don't edit them or delete them it's part of the formatting
--->
-
 #### Description of issue
 
 
@@ -50,4 +39,15 @@ Please check whatever applies. More checkboxes checked increase your chances of 
 - [ ] Issue could be reproduced by different players
 - [ ] Issue could be reproduced in multiple rounds
 - [ ] Issue happened in a recent (less than 7 days ago) round
-- [ ] [Couldn't find an existing issue about this](https://github.com/Baystation12/Baystation12/issues)
+- [ ] [Couldn't find an existing issue about this](https://github.com/TheDaedalusCrew/Daedalus-of-Freedom/issues)
+
+<!--
+	If a specific field doesn't apply, remove it!
+	Anything inside tags like these is a comment and will not be displayed in the final issue.
+	Be careful not to write inside them!
+	Joke or spammed issues can and will result in punishment.
+	
+	PUT YOUR ANSWERS ON THE BLANK LINES BELOW THE HEADERS 
+	(The lines with four #'s) 
+	Don't edit them or delete them it's part of the formatting
+-->
