@@ -14,7 +14,7 @@
 						/datum/job/qm, /datum/job/cargo_tech, /datum/job/cargo_contractor,
 						/datum/job/janitor, /datum/job/chef, /datum/job/bartender,
 						/datum/job/senior_scientist, /datum/job/nt_pilot, /datum/job/scientist, /datum/job/mining, /datum/job/guard, /datum/job/scientist_assistant,
-						/datum/job/ai, /datum/job/cyborg,
+						/datum/job/cyborg,
 						/datum/job/crew, /datum/job/assistant,
 						/datum/job/merchant, /datum/job/stowaway
 						)
@@ -1123,6 +1123,11 @@
 		/datum/mil_rank/civ/offduty,
 		/datum/mil_rank/civ/nt
 	)
+
+/datum/job/cyborg
+	total_positions = 3
+	spawn_positions = 3
+	supervisors = "your laws"
 
 
 /datum/job/merchant
