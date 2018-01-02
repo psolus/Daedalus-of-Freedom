@@ -1124,6 +1124,11 @@
 		/datum/mil_rank/civ/nt
 	)
 
+/datum/job/cyborg
+	total_positions = 3
+	spawn_positions = 3
+	supervisors = "your laws"
+
 
 /datum/job/merchant
 	title = "Merchant"
