@@ -88,6 +88,10 @@
 		var/runtime_log = file("data/logs/runtime/[date_string]_[time2text(world.timeofday, "hh:mm")]_[game_id].log")
 		runtime_log << "Game [game_id] starting up at [time2text(world.timeofday, "hh:mm.ss")]"
 		log = runtime_log
+		
+	#ifndef HUB_ENABLED
+	world.log << "!!! Hub is not enabled. !!!"
+	#endif
 
 	callHook("startup")
 	//Emergency Fix
