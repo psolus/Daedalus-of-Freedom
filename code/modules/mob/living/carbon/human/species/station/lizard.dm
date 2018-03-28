@@ -86,9 +86,6 @@
 /datum/species/unathi/handle_environment_special(var/mob/living/carbon/human/H)
 	if(H.InStasis() || H.stat == DEAD)
 		return
-	if(H.nutrition < 50)
-		H.adjustToxLoss(2,0)
-		return
 	if(!H.innate_heal)
 		return
 
