@@ -37,6 +37,8 @@
 	var/eye_icon = "eyes_s"
 	var/eye_icon_location = 'icons/mob/human_face.dmi'
 
+	var/organs_icon		//species specific internal organs icons
+
 	var/default_h_style = "Bald"
 	var/default_f_style = "Shaved"
 
@@ -76,6 +78,8 @@
 		/datum/unarmed_attack/bite
 		)
 	var/list/unarmed_attacks = null           // For empty hand harm-intent attack
+
+	var/list/natural_armour_values            // Armour values used if naked.
 	var/brute_mod =      1                    // Physical damage multiplier.
 	var/burn_mod =       1                    // Burn damage multiplier.
 	var/oxy_mod =        1                    // Oxyloss modifier
@@ -83,6 +87,10 @@
 	var/radiation_mod =  1                    // Radiation modifier
 	var/flash_mod =      1                    // Stun from blindness modifier.
 	var/metabolism_mod = 1                    // Reagent metabolism modifier
+	var/stun_mod =       1                    // Stun period modifier.
+	var/paralysis_mod =  1                    // Paralysis period modifier.
+	var/weaken_mod =     1                    // Weaken period modifier.
+
 	var/vision_flags = SEE_SELF               // Same flags as glasses.
 
 	// Death vars.
@@ -141,7 +149,8 @@
 	var/list/inherent_verbs 	  // Species-specific verbs.
 	var/has_fine_manipulation = 1 // Can use small items.
 	var/siemens_coefficient = 1   // The lower, the thicker the skin and better the insulation.
-	var/darksight = 2             // Native darksight distance.
+	var/darksight_range = 2       // Native darksight distance.
+	var/darksight_tint = DARKTINT_NONE // How shadows are tinted.
 	var/species_flags = 0         // Various specific features.
 	var/appearance_flags = 0      // Appearance/display related features.
 	var/spawn_flags = 0           // Flags that specify who can spawn as this species
@@ -198,7 +207,13 @@
 	var/list/equip_adjust = list()
 	var/list/equip_overlays = list()
 
+	var/list/base_auras
+
 	var/sexybits_location	//organ tag where they are located if they can be kicked for increased pain
+
+	var/list/prone_overlay_offset = list(0, 0) // amount to shift overlays when lying
+	var/job_skill_buffs = list()				// A list containing jobs (/datum/job), with values the extra points that job recieves.
+
 /*
 These are all the things that can be adjusted for equipping stuff and
 each one can be in the NORTH, SOUTH, EAST, and WEST direction. Specify
@@ -308,6 +323,21 @@ The slots that you can use are found in items_clothing.dm and are the inventory 
 	H.visible_message("<span class='notice'>[H] hugs [target] to make [t_him] feel better!</span>", \
 					"<span class='notice'>You hug [target] to make [t_him] feel better!</span>")
 
+/datum/species/proc/add_base_auras(var/mob/living/carbon/human/H)
+	if(base_auras)
+		for(var/type in base_auras)
+			H.add_aura(new type(H))
+
+/datum/species/proc/remove_base_auras(var/mob/living/carbon/human/H)
+	if(base_auras)
+		var/list/bcopy = base_auras.Copy()
+		for(var/a in H.auras)
+			var/obj/aura/A = a
+			if(is_type_in_list(a, bcopy))
+				bcopy -= A.type
+				H.remove_aura(A)
+				qdel(A)
+
 /datum/species/proc/remove_inherent_verbs(var/mob/living/carbon/human/H)
 	if(inherent_verbs)
 		for(var/verb_path in inherent_verbs)
@@ -322,6 +352,7 @@ The slots that you can use are found in items_clothing.dm and are the inventory 
 
 /datum/species/proc/handle_post_spawn(var/mob/living/carbon/human/H) //Handles anything not already covered by basic species assignment.
 	add_inherent_verbs(H)
+	add_base_auras(H)
 	H.mob_bump_flag = bump_flag
 	H.mob_swap_flags = swap_flags
 	H.mob_push_flags = push_flags
@@ -391,12 +422,13 @@ The slots that you can use are found in items_clothing.dm and are the inventory 
 /datum/species/proc/handle_vision(var/mob/living/carbon/human/H)
 	H.update_sight()
 	H.set_sight(H.sight|get_vision_flags(H)|H.equipment_vision_flags)
+	H.change_light_colour(darksight_tint)
 
 	if(H.stat == DEAD)
 		return 1
 
 	if(!H.druggy)
-		H.set_see_in_dark((H.sight == (SEE_TURFS|SEE_MOBS|SEE_OBJS)) ? 8 : min(darksight + H.equipment_darkness_modifier, 8))
+		H.set_see_in_dark((H.sight == (SEE_TURFS|SEE_MOBS|SEE_OBJS)) ? 8 : min(darksight_range + H.equipment_darkness_modifier, 8))
 		if(H.equipment_see_invis)
 			H.set_see_invisible(min(H.see_invisible, H.equipment_see_invis))
 
@@ -463,7 +495,8 @@ The slots that you can use are found in items_clothing.dm and are the inventory 
 // Impliments different trails for species depending on if they're wearing shoes.
 /datum/species/proc/get_move_trail(var/mob/living/carbon/human/H)
 	if( H.shoes || ( H.wear_suit && (H.wear_suit.body_parts_covered & FEET) ) )
-		return /obj/effect/decal/cleanable/blood/tracks/footprints
+		var/obj/item/clothing/shoes = (H.wear_suit && (H.wear_suit.body_parts_covered & FEET)) ? H.wear_suit : H.shoes // suits take priority over shoes
+		return shoes.move_trail
 	else
 		return move_trail
 
@@ -565,3 +598,10 @@ The slots that you can use are found in items_clothing.dm and are the inventory 
 			facial_hair_style_by_gender[facialhairstyle] = S
 
 	return facial_hair_style_by_gender
+
+/datum/species/proc/skills_from_age(age)	//Converts an age into a skill point allocation modifier. Can be used to give skill point bonuses/penalities not depending on job.
+	switch(age)
+		if(0 to 22) 	. = -1
+		if(23 to 30) 	. = 0
+		if(31 to 45)	. = 1
+		else			. = 2

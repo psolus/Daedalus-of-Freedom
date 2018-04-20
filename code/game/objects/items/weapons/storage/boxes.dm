@@ -25,6 +25,7 @@
 	icon_state = "box"
 	item_state = "syringe_kit"
 	max_storage_space = DEFAULT_BOX_STORAGE
+	use_sound = 'sound/effects/storage/box.ogg'
 	var/foldable = /obj/item/stack/material/cardboard	// BubbleWrap - if set, can be folded (when empty) into a sheet of cardboard
 
 /obj/item/weapon/storage/box/large
@@ -494,3 +495,9 @@
 		/obj/item/weapon/implantpad,
 		/obj/item/weapon/implantcase/imprinting = 3
 		)
+
+/obj/item/weapon/storage/box/detergent
+	name = "detergent pods bag"
+	desc = "A bag full of juicy, yummy detergent pods. This bag has been labeled: Tod Pods, a Waffle Co. product."
+	icon_state = "detergent"
+	startswith = list(/obj/item/weapon/reagent_containers/pill/detergent = 10)

@@ -36,6 +36,11 @@
 	var/latejoin_at_spawnpoints           //If this job should use roundstart spawnpoints for latejoin (offstation jobs etc)
 
 	var/hud_icon						  //icon used for Sec HUD overlay
+	
+	var/min_skill = list()				  //Minimum skills allowed for the job. List should contain skill (as in /decl/hierarchy/skill path), with values which are numbers.
+	var/max_skill = list()				  //Maximum skills allowed for the job.
+	var/skill_points = 10				  //The number of unassigned skill points the job comes with (on top of the minimum skills).
+	var/no_skill_buffs = FALSE			  //Whether skills can be buffed by age/species modifiers.
 
 /datum/job/New()
 	..()
@@ -104,8 +109,8 @@
 	to_chat(H, "<span class='notice'><b>Your account number is: [M.account_number], your account pin is: [M.remote_access_pin]</b></span>")
 
 // overrideable separately so AIs/borgs can have cardborg hats without unneccessary new()/qdel()
-/datum/job/proc/equip_preview(mob/living/carbon/human/H, var/alt_title, var/datum/mil_branch/branch)
-	var/decl/hierarchy/outfit/outfit = get_outfit(H, alt_title, branch)
+/datum/job/proc/equip_preview(mob/living/carbon/human/H, var/alt_title, var/datum/mil_branch/branch, var/datum/mil_rank/grade)
+	var/decl/hierarchy/outfit/outfit = get_outfit(H, alt_title, branch, grade)
 	if(!outfit)
 		return FALSE
 	. = outfit.equip(H, title, alt_title, OUTFIT_ADJUSTMENT_SKIP_POST_EQUIP|OUTFIT_ADJUSTMENT_SKIP_ID_PDA)

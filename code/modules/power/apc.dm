@@ -75,6 +75,7 @@
 	use_power = 0
 	req_access = list(access_engine_equip)
 	clicksound = "switch"
+	var/needs_powerdown_sound
 	var/area/area
 	var/areastring = null
 	var/obj/item/weapon/cell/cell
@@ -352,7 +353,7 @@
 		if(update_state & (UPDATE_OPENED1|UPDATE_OPENED2|UPDATE_BROKE))
 			set_light(0)
 		else if(update_state & UPDATE_BLUESCREEN)
-			set_light(l_range = 2, l_power = 0.5, l_color = "#0000ff")
+			set_light(0.3, 0.1, 1, 2, "0000ff")
 		else if(!(stat & (BROKEN|MAINT)) && update_state & UPDATE_ALLGOOD)
 			var/color
 			switch(charging)
@@ -362,7 +363,7 @@
 					color = "#a8b0f8"
 				if(2)
 					color = "#82ff4c"
-			set_light(l_range = 2, l_power = 0.5, l_color = color)
+			set_light(0.3, 0.1, 1, l_color = color)
 		else
 			set_light(0)
 
@@ -833,6 +834,13 @@
 		area.power_environ = 0
 
 	area.power_change()
+
+	if(!cell || cell.charge <= 0)
+		if(needs_powerdown_sound == TRUE)
+			playsound(src, 'sound/machines/apc_nopower.ogg', 75, 0)
+			needs_powerdown_sound = FALSE
+		else
+			needs_powerdown_sound = TRUE
 
 /obj/machinery/power/apc/proc/isWireCut(var/wireIndex)
 	return wires.IsIndexCut(wireIndex)
