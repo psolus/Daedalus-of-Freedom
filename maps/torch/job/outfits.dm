@@ -136,7 +136,7 @@ Keeping them simple for now, just spawning with basic EC uniforms, and pretty mu
 	suit = /obj/item/clothing/suit/storage/toggle/suit/black
 	shoes = /obj/item/clothing/shoes/laceup
 	id_type = /obj/item/weapon/card/id/torch/passenger/research/liaison
-	pda_type = /obj/item/device/pda/heads
+	pda_type = /obj/item/device/pda/heads/paperpusher
 	backpack_contents = list(/obj/item/clothing/accessory/badge/nanotrasen = 1)
 
 /decl/hierarchy/outfit/job/torch/crew/representative
@@ -146,7 +146,7 @@ Keeping them simple for now, just spawning with basic EC uniforms, and pretty mu
 	suit = /obj/item/clothing/suit/storage/toggle/suit/black
 	shoes = /obj/item/clothing/shoes/laceup
 	id_type = /obj/item/weapon/card/id/torch/crew/representative
-	pda_type = /obj/item/device/pda/heads
+	pda_type = /obj/item/device/pda/heads/paperpusher
 	backpack_contents = list(/obj/item/clothing/accessory/badge/solgov/representative = 1)
 
 /decl/hierarchy/outfit/job/torch/crew/command/sea/fleet
@@ -251,13 +251,21 @@ Keeping them simple for now, just spawning with basic EC uniforms, and pretty mu
 	id_type = /obj/item/weapon/card/id/torch/crew/security/forensic
 	pda_type = /obj/item/device/pda/detective
 
+/decl/hierarchy/outfit/job/torch/crew/security/forensic_tech/contractor
+	name = OUTFIT_JOB_NAME("Forensic Technician - Contractor")
+	head = /obj/item/clothing/head/det
+	uniform = /obj/item/clothing/under/det
+	suit = /obj/item/clothing/suit/storage/det_trench/ft
+	shoes = /obj/item/clothing/shoes/laceup
+	backpack_contents = list(/obj/item/clothing/accessory/badge/PI = 1)
+
 /decl/hierarchy/outfit/job/torch/crew/security/forensic_tech/fleet
 	name = OUTFIT_JOB_NAME("Forensic Technician - Fleet")
 	uniform = /obj/item/clothing/under/solgov/utility/fleet/combat/security
 	shoes = /obj/item/clothing/shoes/dutyboots
 
-/decl/hierarchy/outfit/job/torch/crew/security/forensic_tech/civ
-	name = OUTFIT_JOB_NAME("Forensic Technician - Civilian")
+/decl/hierarchy/outfit/job/torch/crew/security/forensic_tech/marshal
+	name = OUTFIT_JOB_NAME("Forensic Technician - Colonial Marshal")
 	uniform = /obj/item/clothing/under/det/grey
 	suit = /obj/item/clothing/suit/storage/toggle/marshal_jacket
 	shoes = /obj/item/clothing/shoes/dress
@@ -405,7 +413,7 @@ Keeping them simple for now, just spawning with basic EC uniforms, and pretty mu
 	id_type = /obj/item/weapon/card/id/torch/crew/supply/deckofficer
 	pda_type = /obj/item/device/pda/quartermaster
 
-/decl/hierarchy/outfit/job/torch/crew/supply/deckofficer/comissioned
+/decl/hierarchy/outfit/job/torch/crew/supply/deckofficer/commissioned
 	name = OUTFIT_JOB_NAME("Deck Officer - EC Officer")
 	uniform = /obj/item/clothing/under/solgov/utility/expeditionary/officer/supply
 
@@ -498,6 +506,11 @@ Keeping them simple for now, just spawning with basic EC uniforms, and pretty mu
 	shoes = /obj/item/clothing/shoes/dutyboots
 
 //Exploration Outfits
+/decl/hierarchy/outfit/job/torch/crew/exploration/New()
+	..()
+	backpack_overrides[/decl/backpack_outfit/backpack]      = /obj/item/weapon/storage/backpack/explorer
+	backpack_overrides[/decl/backpack_outfit/satchel]       = /obj/item/weapon/storage/backpack/satchel_explorer
+	backpack_overrides[/decl/backpack_outfit/messenger_bag] = /obj/item/weapon/storage/backpack/messenger/explorer
 
 /decl/hierarchy/outfit/job/torch/crew/exploration/pathfinder
 	name = OUTFIT_JOB_NAME("Pathfinder")
@@ -601,10 +614,6 @@ Keeping them simple for now, just spawning with basic EC uniforms, and pretty mu
 	pda_type = /obj/item/device/pda
 	id_type = /obj/item/weapon/card/id/torch/passenger
 
-/decl/hierarchy/outfit/job/torch/passenger/passenger/PI
-	name = OUTFIT_JOB_NAME("Private Investigator - Torch")
-	backpack_contents = list(/obj/item/clothing/accessory/badge/PI = 1)
-
 /decl/hierarchy/outfit/job/torch/passenger/passenger/journalist
 	name = OUTFIT_JOB_NAME("Journalist - Torch")
 	backpack_contents = list(/obj/item/device/tvcamera = 1,
@@ -617,6 +626,23 @@ Keeping them simple for now, just spawning with basic EC uniforms, and pretty mu
 	..()
 	var/obj/item/weapon/storage/secure/briefcase/money/case = new(H.loc)
 	H.put_in_hands(case)
+
+/decl/hierarchy/outfit/job/torch/offduty
+	name = OUTFIT_JOB_NAME("Off-Duty - Torch")
+	uniform = /obj/item/clothing/under/solgov/service/expeditionary
+	l_ear = /obj/item/device/radio/headset
+	shoes = /obj/item/clothing/shoes/dress
+	pda_type = /obj/item/device/pda
+	id_type = /obj/item/weapon/card/id/torch/offduty
+
+/decl/hierarchy/outfit/job/torch/offduty/officer
+	name = OUTFIT_JOB_NAME("Off-Duty - Officer")
+	uniform = /obj/item/clothing/under/solgov/service/expeditionary/command
+
+/decl/hierarchy/outfit/job/torch/offduty/fleet
+	name = OUTFIT_JOB_NAME("Off-Duty - Fleet")
+	uniform = /obj/item/clothing/under/solgov/service/fleet
+	shoes = /obj/item/clothing/shoes/dress/white
 
 /decl/hierarchy/outfit/job/torch/merchant
 	name = OUTFIT_JOB_NAME("Merchant - Torch")
